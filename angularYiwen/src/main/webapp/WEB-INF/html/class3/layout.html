@@ -1,0 +1,85 @@
+<u class="lead">Session 4:</u>
+<p><em><b>Tabs: Tabset with controller</b></em></p>
+<div>
+	<ul class="nav nav-pills">
+		<li ng-class="{active: isSelected(1)}">
+			<a href ng-click="selectTab(1)">Description</a>
+		</li>
+		<li ng-class="{active: isSelected(2)}">
+			<a href ng-click="selectTab(2)">Specification</a>
+		</li>
+		<li ng-class="{active: isSelected(3)}">
+			<a href ng-click="selectTab(3)">Reviews</a>
+		</li>
+	</ul>
+</div> 
+
+
+<div ng-repeat="product in products">
+	<img ng-src={{product.images[0].thumb}} style="max-height:250px"/>
+	<div class="panel" ng-show="isSelected(1)">
+		<p>{{product.name}}</p>
+	</div>
+	<div class="panel" ng-show="isSelected(2)">
+		<p>{{product.price | currency}}</p>
+	</div>
+	<div class="panel" ng-show="isSelected(3)">
+		<p>{{product.description}}</p>
+	</div>
+</div>
+
+<p><em><b>Forms and Models</b></em></p>
+<section ng-controller="PanelController as panel">
+	<ul class="nav nav-pills">
+		<li ng-class="{active: panel.isSelected(1)}">
+			<a href ng-click="panel.selectTab(1)">Description</a>
+		</li>
+		<li ng-class="{active: panel.isSelected(2)}">
+			<a href ng-click="panel.selectTab(2)">Specification</a>
+		</li>
+		<li ng-class="{active: panel.isSelected(3)}">
+			<a href ng-click="panel.selectTab(3)">Description</a>
+		</li>  
+		<li ng-class="{active: panel.isSelected(4)">
+			<a href ng-click="panel.selectTab(4)">Reviews</a>
+		<li>
+		</li>
+	</ul>
+
+	<div ng-repeat="product in products">
+	<img ng-src={{product.images[0].thumb}} style="max-height:250px"/>
+	<div class="panel" ng-show="panel.isSelected(1)">
+		<p>{{product.name}}</p>
+	</div>
+	<div class="panel" ng-show="panel.isSelected(2)">
+		<p>{{product.price | currency}}</p>
+	</div>
+	<div class="panel" ng-show="panel.isSelected(3)">
+		<p>{{product.description}}</p>
+	</div>
+	<div class="panel" ng-show="panel.isSelected(4)">
+		<!-- <p>{{product.reviews}}</p> -->
+		 <blockquote ng-repeat = "review in product.reviews">
+			<b>Stars:{{review.stars}}</b> 
+			{{review.body}}
+			<cite class="clearfix">-{{review.author}} {{review.createdOn | date}}</cite>
+		</blockquote>
+	<form name="reviewForm" ng-controller="ReviewController as reviewCtrl"
+							ng-submit="reviewCtrl.addReview(product)">
+		<select ng-model="reviewCtrl.review.stars" required>
+			<option value="">Rate the product</option>
+			<option value="1">1 star</option>
+			<option value="2">2 star</option>
+			<option value="3">3 star</option>
+		</select><br />
+		<textarea ng-model="reviewCtrl.review.body" required placeholder="Write shortly"></textarea><br />
+		<input type="email" ng-model="reviewCtrl.review.author"  placeholder="123@cogent.com"/><br />
+		<label>is form completed or validated? {{reviewForm.$valid}}</label>
+		<input type="submit" value="Submit" />
+	</form>
+	</div>
+</div>
+</section>
+
+
+
